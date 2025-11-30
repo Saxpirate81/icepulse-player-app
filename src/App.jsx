@@ -136,7 +136,7 @@ const Button = ({ children, onClick, variant = 'primary', className = '', size =
 };
 
 const Card = ({ children, onClick, className = '' }) => (
-  <div onClick={onClick} className={`bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl p-5 ${className}`}>
+  <div onClick={onClick} className={`bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl p-3 md:p-5 ${className}`}>
     {children}
   </div>
 );
@@ -1875,7 +1875,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
   const days = getNext7Days();
 
   return (
-    <div className="space-y-6 pb-24 animate-in fade-in duration-500">
+    <div className="space-y-4 md:space-y-6 pb-24 animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400 uppercase">
@@ -1892,8 +1892,8 @@ const PlayerHome = ({ setView, setActiveTask }) => {
       </div>
 
       {/* Calendar View - Next 7 Days */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
+      <div className="space-y-2 md:space-y-3 bg-zinc-900/20 rounded-2xl p-3 md:p-4 -mx-1 md:-mx-0 border border-zinc-800/50">
+        <div className="flex items-center justify-between">
           <h3 className="text-zinc-500 font-bold uppercase text-xs tracking-wider">This Week</h3>
           {assignedWorkouts.length > 0 && (
             <Badge color="cyan">{assignedWorkouts.length} Active Workout{assignedWorkouts.length !== 1 ? 's' : ''}</Badge>
@@ -1914,7 +1914,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
             <Card key={dateKey} className={`overflow-hidden transition-all ${isToday ? 'border-cyan-500/50 bg-cyan-900/10' : ''}`}>
               {/* Day Header */}
               <div 
-                className="flex items-center justify-between p-4 cursor-pointer"
+                className="flex items-center justify-between p-3 md:p-4 cursor-pointer"
                 onClick={() => toggleDayExpand(dateKey)}
               >
                 <div className="flex items-center gap-3 flex-1">
@@ -2010,10 +2010,10 @@ const PlayerHome = ({ setView, setActiveTask }) => {
             
               {/* Expanded Content */}
               {isExpanded && (!isExcluded || (isFirstDay && isToday)) && (
-                <div className="border-t border-zinc-800 p-4 space-y-4">
+                <div className="border-t border-zinc-800 p-3 md:p-4 space-y-3 md:space-y-4">
                   {dayAssignments.length > 0 ? (
                     dayAssignments.map((assignment) => (
-                      <div key={assignment.id} className="space-y-3 border border-zinc-800 rounded-xl p-4 bg-zinc-900/50">
+                      <div key={assignment.id} className="space-y-2 md:space-y-3 border border-zinc-800 rounded-xl p-3 md:p-4 bg-zinc-900/50">
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
@@ -2064,7 +2064,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
                         <Card 
                             key={task.id} 
                             onClick={() => handleTaskClick(task)}
-                                className="p-3 flex items-center gap-3 cursor-pointer hover:border-cyan-500/50 transition-colors border-l-4 border-l-zinc-800"
+                                className="p-2.5 md:p-3 flex items-center gap-2 md:gap-3 cursor-pointer hover:border-cyan-500/50 transition-colors border-l-4 border-l-zinc-800"
                               >
                                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${task.completed ? 'bg-green-500/10 text-green-500' : 'bg-zinc-800 text-zinc-400'}`}>
                                   {task.completed ? <CheckCircle size={18} /> : <Activity size={18} />}
@@ -2094,7 +2094,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
               )}
 
               {isExpanded && isExcluded && !(isFirstDay && isToday) && (
-                <div className="border-t border-zinc-800 p-4 text-center py-8">
+                <div className="border-t border-zinc-800 p-3 md:p-4 text-center py-6 md:py-8">
                   <p className="text-zinc-500 text-sm mb-2">
                     {excludedReason === 'game' ? '🏒' : '⛸️'} {excludedReason === 'game' ? 'Game' : 'Practice'} Day
                   </p>
@@ -4099,15 +4099,15 @@ export default function App() {
     <div className="flex items-center justify-center min-h-screen bg-zinc-200 font-sans selection:bg-cyan-500/30 p-0 md:p-8">
       
       {/* Mobile Device Frame for Web App View */}
-      <div className="w-full h-screen md:h-[850px] md:w-[400px] bg-zinc-950 md:rounded-[3rem] relative shadow-2xl overflow-hidden border-[8px] border-zinc-900 md:ring-4 ring-zinc-400/20">
+      <div className="w-full h-screen md:h-[850px] md:w-[400px] bg-zinc-950 md:rounded-[3rem] relative shadow-2xl overflow-hidden border-[8px] border-zinc-900 md:ring-4 ring-zinc-400/20 max-w-full overflow-x-hidden">
         
         {/* Dynamic Island / Notch Simulation (Visible on Desktop) */}
         <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-50"></div>
         
         {/* Status Bar */}
-        <div className="absolute top-0 left-0 right-0 h-12 px-6 flex justify-between items-center z-40 text-white text-xs font-medium">
-            <span className="ml-2">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-            <div className="flex gap-1.5 items-center mr-2">
+        <div className="absolute top-0 left-0 right-0 h-12 px-3 md:px-6 flex justify-between items-center z-40 text-white text-xs font-medium">
+            <span className="ml-1 md:ml-2">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+            <div className="flex gap-1.5 items-center mr-1 md:mr-2">
                 <Signal size={14} fill="currentColor" />
                 <Wifi size={14} />
                 <Battery size={18} fill="currentColor" className="rotate-90" />
@@ -4115,7 +4115,7 @@ export default function App() {
         </div>
 
         {/* Top App Bar */}
-        <div className="absolute top-12 left-0 right-0 z-30 px-4 h-14 flex justify-between items-center backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800/50">
+        <div className="absolute top-12 left-0 right-0 z-30 px-2 md:px-4 h-14 flex justify-between items-center backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800/50">
             <IcePulseLogo />
             <div className="flex items-center gap-2">
               {/* Organization Dashboard Button (for admins) */}
@@ -4157,14 +4157,16 @@ export default function App() {
         </div>
 
         {/* Scrollable Content Area */}
-        <main className="absolute inset-0 pt-28 pb-24 px-4 overflow-y-auto no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900">
-            {renderView()}
+        <main className="absolute inset-0 pt-28 pb-24 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900">
+            <div className="max-w-full overflow-x-hidden">
+                {renderView()}
+            </div>
         </main>
 
         {/* Bottom Navigation */}
         {(!isAuthenticated || currentView !== 'organization-dashboard') && (
         <nav className="absolute bottom-0 left-0 right-0 bg-zinc-950/90 backdrop-blur-xl border-t border-zinc-800 pb-safe pt-2 z-40 h-20">
-            <div className="flex justify-around items-center px-2 h-full pb-4">
+            <div className="flex justify-around items-center px-1 md:px-2 h-full pb-4">
             
             {userRole === 'student' ? (
                 <button onClick={() => setCurrentView('home')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'home' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>

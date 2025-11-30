@@ -189,21 +189,21 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
   };
 
   return (
-    <div className="space-y-6 pb-24 animate-in fade-in duration-500">
+    <div className="space-y-6 pb-24 animate-in fade-in duration-500 max-w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-black italic text-white uppercase mb-1">
+      <div className="flex justify-between items-center max-w-full overflow-x-hidden">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-3xl font-black italic text-white uppercase mb-1 truncate">
             Organization Dashboard
           </h1>
           <p className="text-zinc-400 text-sm">
             Manage teams, coaches, and players
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-shrink-0">
           <button
             onClick={() => setView('library')}
-            className="bg-zinc-800 text-white px-4 py-2 rounded-xl font-bold text-sm uppercase hover:bg-zinc-700 transition-colors flex items-center gap-2"
+            className="bg-zinc-800 text-white px-4 py-2 rounded-xl font-bold text-sm uppercase hover:bg-zinc-700 transition-colors flex items-center gap-2 whitespace-nowrap"
           >
             <Dumbbell size={16} /> Workouts
           </button>
@@ -211,7 +211,7 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-zinc-800">
+      <div className="flex gap-2 border-b border-zinc-800 overflow-x-auto overflow-y-hidden no-scrollbar max-w-full">
         {[
           { id: 'overview', label: 'Overview', icon: BarChart3 },
           { id: 'teams', label: 'Teams', icon: Users },
@@ -223,7 +223,7 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-3 font-bold text-sm uppercase transition-colors flex items-center gap-2 border-b-2 ${
+              className={`px-4 py-3 font-bold text-sm uppercase transition-colors flex items-center gap-2 border-b-2 flex-shrink-0 whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'border-cyan-500 text-cyan-400'
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
@@ -240,7 +240,7 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
       {activeTab === 'overview' && (
         <div className="space-y-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-full overflow-x-hidden">
             <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
               <div className="flex items-center justify-between mb-2">
                 <Dumbbell className="text-cyan-400" size={20} />
@@ -279,7 +279,7 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
           </div>
 
           {/* Activity Sections */}
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4 max-w-full overflow-x-hidden">
             {/* Recent Chats */}
             <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
               <div className="flex justify-between items-center mb-4">
