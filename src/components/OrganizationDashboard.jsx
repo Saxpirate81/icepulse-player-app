@@ -189,7 +189,7 @@ export const OrganizationDashboard = ({ organizationId, setView }) => {
   };
 
   return (
-    <div className="space-y-6 pb-24 animate-in fade-in duration-500 max-w-full overflow-x-hidden">
+    <div className="space-y-6 pb-32 animate-in fade-in duration-500 max-w-full overflow-x-hidden">
       {/* Header */}
       <div className="flex justify-between items-center max-w-full overflow-x-hidden">
         <div className="min-w-0 flex-1">

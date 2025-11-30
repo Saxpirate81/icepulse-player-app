@@ -222,7 +222,7 @@ const OrganizationSetup = ({ setView }) => {
   };
 
   return (
-    <div className="space-y-6 pb-24 animate-in fade-in duration-500">
+    <div className="space-y-6 pb-32 animate-in fade-in duration-500">
       {/* Step Indicator */}
       <div className="flex items-center justify-center gap-4 mb-8">
         {['signup', 'teams', 'coaches', 'players'].map((step, idx) => {
@@ -425,7 +425,7 @@ const CoachRoster = () => {
   const [showInvite, setShowInvite] = useState(false);
 
   return (
-    <div className="space-y-6 pb-24 relative animate-in fade-in duration-500">
+    <div className="space-y-6 pb-32 relative animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black italic text-white uppercase">Team Roster</h2>
         <Button size="sm" onClick={() => setShowInvite(true)}><Plus size={16} /> Add Player</Button>
@@ -580,7 +580,7 @@ const CoachLibrary = ({ setView, setEditingDrill }) => {
                 : archivedDrills;
 
     return (
-        <div className="space-y-6 pb-24 animate-in fade-in duration-500">
+        <div className="space-y-6 pb-32 animate-in fade-in duration-500">
              <div className="flex justify-between items-center">
                 <h2 className="text-3xl font-black italic text-white uppercase">Playbook</h2>
                 <Button size="sm" onClick={() => { 
@@ -886,7 +886,7 @@ const WorkoutBuilder = ({ setView, editingDrill }) => {
   }, [editingDrill]);
 
     return (
-        <div className="space-y-6 pb-24 animate-in slide-in-from-right duration-300">
+        <div className="space-y-6 pb-32 animate-in slide-in-from-right duration-300">
             <div className="flex items-center gap-4 mb-2">
                                     <button 
           onClick={() => setView('library')}
@@ -1872,7 +1872,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
   const days = getNext7Days();
 
   return (
-    <div className="space-y-4 md:space-y-6 pb-24 animate-in fade-in duration-500">
+    <div className="space-y-4 md:space-y-6 pb-32 animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400 uppercase">
@@ -3245,7 +3245,7 @@ const ProgressAnalyticsView = ({ setView }) => {
     };
 
     return (
-        <div className="space-y-6 pb-24 animate-in fade-in">
+        <div className="space-y-6 pb-32 animate-in fade-in">
             <div className="flex items-center gap-4 mb-2">
                 <button onClick={() => setView('profile')} className="p-2 rounded-full bg-zinc-800 text-zinc-400 hover:text-white">
                     <ChevronRight className="rotate-180" size={20} />
@@ -3689,7 +3689,7 @@ const ProfileView = ({ setView }) => {
     }, []);
 
     return (
-        <div className="space-y-6 animate-in fade-in pb-24">
+        <div className="space-y-6 animate-in fade-in pb-32">
             <div className="text-center relative">
                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center text-white font-black italic text-3xl mb-4 border-4 border-zinc-900 shadow-xl shadow-cyan-900/20">
                     97
@@ -4174,8 +4174,8 @@ export default function App() {
         </div>
 
         {/* Scrollable Content Area */}
-        <main className="absolute top-14 left-0 right-0 bottom-24 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 10 }}>
-            <div className="max-w-full overflow-x-hidden">
+        <main className="absolute top-14 left-0 right-0 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 10, bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingBottom: '1rem' }}>
+            <div className="max-w-full overflow-x-hidden" style={{ paddingBottom: '2rem' }}>
                 {renderView()}
             </div>
         </main>
