@@ -3470,7 +3470,7 @@ const SubscriptionView = ({ setView }) => {
     };
 
     return (
-        <div className="space-y-6 pb-24 animate-in fade-in">
+        <div className="space-y-6 pb-32 animate-in fade-in">
             <div className="flex items-center gap-4 mb-2">
                 <button onClick={() => setView('profile')} className="p-2 rounded-full bg-zinc-800 text-zinc-400 hover:text-white">
                     <ChevronRight className="rotate-180" size={20} />
