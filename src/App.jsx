@@ -35,9 +35,6 @@ import {
   Thermometer,
   Timer,
   Video,
-  Battery,
-  Wifi,
-  Signal,
   TrendingUp,
   TrendingDown,
   BarChart3,
@@ -3932,6 +3929,39 @@ export default function App() {
   const [currentView, setCurrentView] = useState('home'); // Default to home
   const [activeTask, setActiveTask] = useState(null); 
   const [editingDrill, setEditingDrill] = useState(null);
+
+  // Hide browser toolbar on mobile and set proper viewport height
+  useEffect(() => {
+    // Set viewport height CSS variable for mobile browsers
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+    
+    // Prevent zoom on double tap (helps keep toolbar hidden)
+    let lastTouchEnd = 0;
+    const preventDoubleTapZoom = (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    };
+    document.addEventListener('touchend', preventDoubleTapZoom, false);
+    
+    // Scroll to top on load to help hide toolbar
+    window.scrollTo(0, 1);
+    
+    return () => {
+      window.removeEventListener('resize', setViewportHeight);
+      window.removeEventListener('orientationchange', setViewportHeight);
+      document.removeEventListener('touchend', preventDoubleTapZoom, false);
+    };
+  }, []);
   
   // Authentication state
   const [authView, setAuthView] = useState('login'); // 'login', 'signup', 'forgot-password', null
@@ -4101,21 +4131,8 @@ export default function App() {
       {/* Mobile Device Frame for Web App View */}
       <div className="w-full h-screen md:h-[850px] md:w-[400px] bg-zinc-950 md:rounded-[3rem] relative shadow-2xl overflow-hidden border-[8px] border-zinc-900 md:ring-4 ring-zinc-400/20 max-w-full overflow-x-hidden">
         
-        {/* Dynamic Island / Notch Simulation (Visible on Desktop) */}
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-50"></div>
-        
-        {/* Status Bar */}
-        <div className="absolute top-0 left-0 right-0 h-12 px-3 md:px-6 flex justify-between items-center z-40 text-white text-xs font-medium">
-            <span className="ml-1 md:ml-2">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-            <div className="flex gap-1.5 items-center mr-1 md:mr-2">
-                <Signal size={14} fill="currentColor" />
-                <Wifi size={14} />
-                <Battery size={18} fill="currentColor" className="rotate-90" />
-            </div>
-        </div>
-
-        {/* Top App Bar */}
-        <div className="absolute top-12 left-0 right-0 z-30 px-2 md:px-4 h-14 flex justify-between items-center backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800/50">
+        {/* Top App Bar - Fixed at top */}
+        <div className="fixed top-0 left-0 right-0 z-40 px-2 md:px-4 h-14 flex justify-between items-center bg-zinc-950 border-b border-zinc-800/50 shadow-lg">
             <IcePulseLogo />
             <div className="flex items-center gap-2">
               {/* Organization Dashboard Button (for admins) */}
@@ -4157,16 +4174,16 @@ export default function App() {
         </div>
 
         {/* Scrollable Content Area */}
-        <main className="absolute inset-0 pt-28 pb-24 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900">
+        <main className="absolute top-14 left-0 right-0 bottom-24 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 10 }}>
             <div className="max-w-full overflow-x-hidden">
                 {renderView()}
             </div>
         </main>
 
-        {/* Bottom Navigation */}
+        {/* Bottom Navigation - Fixed at bottom */}
         {(!isAuthenticated || currentView !== 'organization-dashboard') && (
-        <nav className="absolute bottom-0 left-0 right-0 bg-zinc-950/90 backdrop-blur-xl border-t border-zinc-800 pb-safe pt-2 z-40 h-20">
-            <div className="flex justify-around items-center px-1 md:px-2 h-full pb-4">
+        <nav className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-zinc-800 pt-2 z-40 shadow-lg" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', height: 'calc(5rem + env(safe-area-inset-bottom))' }}>
+            <div className="flex justify-around items-center px-1 md:px-2 h-full" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
             
             {userRole === 'student' ? (
                 <button onClick={() => setCurrentView('home')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'home' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
