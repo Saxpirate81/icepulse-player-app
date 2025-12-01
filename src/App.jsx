@@ -2034,9 +2034,19 @@ const PlayerHome = ({ setView, setActiveTask }) => {
             </div>
             
               {/* Expanded Content */}
-              {isExpanded && (!isExcluded || (isFirstDay && isToday)) && (
+              {isExpanded && (
                 <div className="border-t border-zinc-800 p-3 md:p-4 space-y-3 md:space-y-4">
-                  {dayAssignments.length > 0 ? (
+                  {isExcluded && !(isFirstDay && isToday) ? (
+                    <div className="text-center py-8">
+                      <div className="text-4xl mb-3">{excludedReason === 'game' ? '🏒' : '⛸️'}</div>
+                      <p className="text-zinc-400 text-sm font-bold uppercase mb-1">
+                        {excludedReason === 'game' ? 'Game Day' : 'Practice Day'}
+                      </p>
+                      <p className="text-zinc-500 text-xs">
+                        All workouts and skills are disabled for this day
+                      </p>
+                    </div>
+                  ) : dayAssignments.length > 0 ? (
                     dayAssignments.map((assignment) => (
                       <div key={assignment.id} className="space-y-2 md:space-y-3 border border-zinc-800 rounded-xl p-3 md:p-4 bg-zinc-900/50">
                         <div className="flex items-start justify-between gap-3">
