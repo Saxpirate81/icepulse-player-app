@@ -3946,6 +3946,19 @@ export default function App() {
   const [activeTask, setActiveTask] = useState(null); 
   const [editingDrill, setEditingDrill] = useState(null);
 
+  // Clear dummy data on mount (except workout/skill/stretching and real accounts)
+  useEffect(() => {
+    const clearData = async () => {
+      try {
+        const { clearDummyData } = await import('./utils/clearDummyData.js');
+        clearDummyData();
+      } catch (error) {
+        console.error('Error clearing dummy data:', error);
+      }
+    };
+    clearData();
+  }, []);
+
   // Hide browser toolbar on mobile and set proper viewport height
   useEffect(() => {
     // Set viewport height CSS variable for mobile browsers
