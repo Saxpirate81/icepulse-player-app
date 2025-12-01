@@ -62,8 +62,8 @@ div[class*="fixed"][class*="top-0"] {
 main[class*="overflow-y-auto"] {
   position: absolute !important;
   z-index: 1 !important;
-  top: 3.5rem !important; /* h-14 = 3.5rem */
-  max-height: calc(100vh - 3.5rem - 5rem) !important;
+  top: calc(3.5rem + env(safe-area-inset-top, 0px)) !important;
+  max-height: calc(100vh - 3.5rem - env(safe-area-inset-top, 0px) - 5rem) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   /* Force clipping to prevent content showing above */
@@ -74,6 +74,21 @@ main[class*="overflow-y-auto"] {
   /* Ensure content cannot scroll above top */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+  /* Prevent any content from showing above */
+  overflow: hidden auto !important;
+}
+
+/* Force all content inside main to stay below header */
+main[class*="overflow-y-auto"] > div {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+  max-height: 100% !important;
+}
+
+main[class*="overflow-y-auto"] > div > div {
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Add a mask above header to prevent any content from showing */

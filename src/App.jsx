@@ -4177,9 +4177,11 @@ export default function App() {
         </div>
 
         {/* Scrollable Content Area - Starts below header, never scrolls above */}
-        <main className="absolute left-0 right-0 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 1, top: '3.5rem', bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingTop: '0', paddingBottom: '1rem', willChange: 'scroll-position', position: 'absolute', maxHeight: 'calc(100vh - 3.5rem - calc(5rem + max(1rem, env(safe-area-inset-bottom))))', clipPath: 'inset(0 0 0 0)', WebkitClipPath: 'inset(0 0 0 0)' }}>
-            <div className="max-w-full overflow-x-hidden" style={{ paddingBottom: '2rem' }}>
-            {renderView()}
+        <main className="absolute left-0 right-0 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 1, top: 'calc(3.5rem + env(safe-area-inset-top, 0px))', bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingTop: '0', paddingBottom: '1rem', willChange: 'scroll-position', position: 'absolute', maxHeight: 'calc(100vh - 3.5rem - env(safe-area-inset-top, 0px) - calc(5rem + max(1rem, env(safe-area-inset-bottom))))', clipPath: 'inset(0 0 0 0)', WebkitClipPath: 'inset(0 0 0 0)', overflow: 'hidden auto' }}>
+            <div style={{ overflow: 'hidden', position: 'relative', minHeight: '100%' }}>
+                <div className="max-w-full overflow-x-hidden" style={{ paddingBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                    {renderView()}
+                </div>
             </div>
         </main>
 
