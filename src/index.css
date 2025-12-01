@@ -66,6 +66,14 @@ main[class*="overflow-y-auto"] {
   max-height: calc(100vh - 3.5rem - 5rem) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+  /* Force clipping to prevent content showing above */
+  clip-path: inset(0 0 0 0) !important;
+  -webkit-clip-path: inset(0 0 0 0) !important;
+  /* Contain content to prevent overflow */
+  contain: layout style paint !important;
+  /* Ensure content cannot scroll above top */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Add a mask above header to prevent any content from showing */
@@ -79,6 +87,19 @@ body::before {
   background-color: #18181b;
   z-index: 99998;
   pointer-events: none;
+}
+
+/* Force root container to clip content */
+#root {
+  overflow: hidden;
+  position: relative;
+  height: 100vh;
+}
+
+#root > div {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
 }
 
 /* Ensure headers have completely solid backgrounds with no transparency */
