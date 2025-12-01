@@ -91,18 +91,7 @@ div[class*="fixed"][class*="top-0"] {
   z-index: 99999 !important;
 }
 
-/* Add a mask above header to prevent any content from showing */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3.5rem;
-  background-color: #18181b;
-  z-index: 99998;
-  pointer-events: none;
-}
+/* Removed mask overlay - header now handles covering content */
 
 /* Force root container to clip content */
 #root {

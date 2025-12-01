@@ -52,12 +52,12 @@ import {
 // --- Assets ---
 
 const IcePulseLogo = ({ className = "" }) => (
-  <div className={`flex items-center gap-2 ${className}`}>
+  <div className={`flex items-center gap-2 ${className}`} style={{ zIndex: 100000, position: 'relative' }}>
     <div className="relative flex items-center justify-center w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg transform -skew-x-12 shadow-lg shadow-cyan-500/20">
       <Activity className="text-white relative z-10" size={20} strokeWidth={3} />
     </div>
-    <span className="font-black text-xl tracking-tighter text-white italic">
-      ICE<span className="text-cyan-400">PULSE</span>
+    <span className="font-black text-xl tracking-tighter text-white italic" style={{ color: '#ffffff' }}>
+      ICE<span className="text-cyan-400" style={{ color: '#22d3ee' }}>PULSE</span>
     </span>
   </div>
 );
@@ -2045,7 +2045,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
                       <p className="text-zinc-500 text-xs">
                         All workouts and skills are disabled for this day
                       </p>
-                    </div>
+                </div>
                   ) : dayAssignments.length > 0 ? (
                     dayAssignments.map((assignment) => (
                       <div key={assignment.id} className="space-y-2 md:space-y-3 border border-zinc-800 rounded-xl p-3 md:p-4 bg-zinc-900/50">
@@ -2059,7 +2059,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
                               {assignment.type === 'auto' && !assignment.isDefault && (
                                 <Badge color="cyan" className="text-[10px] flex-shrink-0">Auto</Badge>
                               )}
-                </div>
+            </div>
                             {assignment.description && (
                               <p className="text-zinc-400 text-xs mt-1 line-clamp-2">{assignment.description}</p>
                             )}
@@ -2134,15 +2134,15 @@ const PlayerHome = ({ setView, setActiveTask }) => {
                                     ) : (
                                       <>
                                         {task.duration && <span>{task.duration}</span>}
-                                        {task.totalSets && <span>• {task.totalSets} sets</span>}
+                                    {task.totalSets && <span>• {task.totalSets} sets</span>}
                                       </>
                                     )}
                                 </div>
                             </div>
                                 {!isTaskDisabled && !task.completed && <ChevronRight size={14} className="text-zinc-600" />}
                         </Card>
-                            );
-                            })}
+                      );
+                    })}
                 </div>
                         ))}
              </div>
@@ -4210,8 +4210,8 @@ export default function App() {
       <div className="w-full h-screen md:h-[850px] md:w-[400px] bg-zinc-950 md:rounded-[3rem] relative shadow-2xl overflow-hidden border-[8px] border-zinc-900 md:ring-4 ring-zinc-400/20 max-w-full overflow-x-hidden" style={{ margin: 0, padding: 0 }}>
         
         {/* Top App Bar - Fixed at top with solid background, covers browser status bar */}
-        <div className="fixed top-0 left-0 right-0 z-[99999] px-2 md:px-4 flex justify-between items-center border-b border-zinc-800/50 shadow-lg" style={{ backgroundColor: '#18181b', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999, minHeight: '3.5rem', height: '3.5rem', paddingTop: 'env(safe-area-inset-top, 0px)', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)', alignItems: 'center' }}>
-            <IcePulseLogo className="flex-shrink-0" />
+        <div className="fixed top-0 left-0 right-0 z-[99999] px-2 md:px-4 flex justify-between items-center border-b border-zinc-800/50 shadow-lg" style={{ backgroundColor: '#18181b', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999, minHeight: '3.5rem', height: '3.5rem', paddingTop: 'env(safe-area-inset-top, 0px)', overflow: 'visible', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)', alignItems: 'center', display: 'flex' }}>
+            <IcePulseLogo className="flex-shrink-0 z-[100000]" />
             <div className="flex items-center gap-2">
               {/* Organization Dashboard Button (for admins, hidden in player view) */}
               {isAuthenticated && currentUser?.role === 'organization_admin' && userRole !== 'student' && (
@@ -4233,7 +4233,7 @@ export default function App() {
               
               {/* Player/Coach Toggle (show if not in org dashboard, or if org admin can also be coach) */}
               {(!isAuthenticated || currentView !== 'organization-dashboard' || (currentUser?.role === 'organization_admin' && currentUser?.isCoach)) && (
-                <button 
+            <button 
                   onClick={() => {
                     if (userRole === 'student') {
                       setUserRole('coach');
