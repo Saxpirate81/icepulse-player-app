@@ -49,15 +49,32 @@ body {
 
 /* Ensure header stays on top and content doesn't scroll behind it */
 header, nav[class*="absolute"][class*="top-0"],
-div[class*="absolute"][class*="top-0"][class*="z-"] {
+div[class*="absolute"][class*="top-0"][class*="z-"],
+nav[class*="fixed"][class*="bottom-0"] {
   position: fixed !important;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Prevent content from showing above header */
+/* Prevent content from showing above or through header */
 main[class*="overflow-y-auto"] {
   position: relative;
   z-index: 10;
+}
+
+/* Ensure headers have solid backgrounds */
+nav[class*="fixed"][class*="top-0"],
+div[class*="fixed"][class*="top-0"] {
+  background-color: #18181b !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+nav[class*="fixed"][class*="bottom-0"] {
+  background-color: #18181b !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 @layer utilities {
