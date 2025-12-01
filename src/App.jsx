@@ -4262,24 +4262,24 @@ export default function App() {
 
         {/* Bottom Navigation - Fixed at bottom */}
         {(!isAuthenticated || currentView !== 'organization-dashboard') && (
-        <nav className="fixed bottom-0 left-0 right-0 border-t border-zinc-800 pt-2 z-50 shadow-lg" style={{ backgroundColor: '#18181b', paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', height: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', minHeight: '5rem' }}>
-            <div className="flex justify-around items-center px-1 md:px-2 h-full w-full" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', maxWidth: '100%', overflow: 'hidden' }}>
+        <nav className="fixed bottom-0 left-0 right-0 border-t border-zinc-800 pt-2 z-50 shadow-lg" style={{ backgroundColor: '#18181b', paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', height: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', minHeight: '5rem', overflow: 'visible' }}>
+            <div className="flex justify-around items-center px-1 md:px-2 h-full w-full" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', maxWidth: '100%', overflow: 'visible', position: 'relative' }}>
             
             {userRole === 'student' ? (
-                <button onClick={() => setCurrentView('home')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'home' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
+                <button onClick={() => setCurrentView('home')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'home' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`} style={{ flexShrink: 0, minWidth: '4rem' }}>
                     <Activity size={24} strokeWidth={currentView === 'home' ? 2.5 : 2} />
                     <span className="text-[10px] font-bold uppercase tracking-wide">Train</span>
                 </button>
             ) : (
-                <button onClick={() => setCurrentView('roster')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'roster' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
+                <button onClick={() => setCurrentView('roster')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'roster' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`} style={{ flexShrink: 0, minWidth: '4rem' }}>
                     <Users size={24} strokeWidth={currentView === 'roster' ? 2.5 : 2} />
                     <span className="text-[10px] font-bold uppercase tracking-wide">Team</span>
                 </button>
             )}
 
             {userRole === 'student' && (
-                <button onClick={() => setCurrentView('training')} className={`flex flex-col items-center gap-1 w-16 group`}>
-                    <div className={`p-3 rounded-full -mt-8 border-[6px] border-zinc-950 transition-all duration-300 group-active:scale-95 ${currentView === 'training' ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'bg-zinc-800 text-zinc-400 group-hover:bg-zinc-700'}`}>
+                <button onClick={() => setCurrentView('training')} className={`flex flex-col items-center gap-1 w-16 group relative`} style={{ zIndex: 100001 }}>
+                    <div className={`p-3 rounded-full -mt-8 border-[6px] border-zinc-950 transition-all duration-300 group-active:scale-95 ${currentView === 'training' ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'bg-zinc-800 text-zinc-400 group-hover:bg-zinc-700'}`} style={{ zIndex: 100001, position: 'relative' }}>
                         <Play size={24} fill="currentColor" className={currentView === 'training' ? 'ml-1' : ''} />
                     </div>
                     <span className={`text-[10px] font-bold uppercase mt-1 transition-colors ${currentView === 'training' ? 'text-cyan-400' : 'text-zinc-500'}`}>Start</span>
@@ -4287,15 +4287,15 @@ export default function App() {
             )}
 
             {userRole === 'coach' && (
-                <button onClick={() => setCurrentView('library')} className={`flex flex-col items-center gap-1 w-16 group`}>
-                    <div className={`p-3 rounded-full -mt-8 border-[6px] border-zinc-950 transition-all duration-300 group-active:scale-95 ${['library', 'builder'].includes(currentView) ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'bg-zinc-800 text-zinc-400 group-hover:bg-zinc-700'}`}>
+                <button onClick={() => setCurrentView('library')} className={`flex flex-col items-center gap-1 w-16 group relative`} style={{ zIndex: 100001 }}>
+                    <div className={`p-3 rounded-full -mt-8 border-[6px] border-zinc-950 transition-all duration-300 group-active:scale-95 ${['library', 'builder'].includes(currentView) ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'bg-zinc-800 text-zinc-400 group-hover:bg-zinc-700'}`} style={{ zIndex: 100001, position: 'relative' }}>
                         {currentView === 'builder' ? <Plus size={24} /> : <Library size={24} />}
                     </div>
                     <span className={`text-[10px] font-bold uppercase mt-1 transition-colors ${['library', 'builder'].includes(currentView) ? 'text-cyan-400' : 'text-zinc-500'}`}>Drills</span>
                 </button>
             )}
 
-            <button onClick={() => setCurrentView('chat')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'chat' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
+            <button onClick={() => setCurrentView('chat')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'chat' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`} style={{ flexShrink: 0, minWidth: '4rem' }}>
                 <div className="relative">
                     <MessageSquare size={24} strokeWidth={currentView === 'chat' ? 2.5 : 2} />
                     <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-zinc-950 animate-pulse"></span>
@@ -4303,7 +4303,7 @@ export default function App() {
                 <span className="text-[10px] font-bold uppercase tracking-wide">Chat</span>
             </button>
 
-            <button onClick={() => setCurrentView('profile')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'profile' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
+            <button onClick={() => setCurrentView('profile')} className={`flex flex-col items-center gap-1 w-16 transition-colors ${currentView === 'profile' ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-300'}`} style={{ flexShrink: 0, minWidth: '4rem' }}>
                 <User size={24} strokeWidth={currentView === 'profile' ? 2.5 : 2} />
                 <span className="text-[10px] font-bold uppercase tracking-wide">Me</span>
             </button>
