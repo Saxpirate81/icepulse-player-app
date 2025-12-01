@@ -59,36 +59,36 @@ div[class*="fixed"][class*="top-0"] {
 }
 
 /* Prevent content from showing above or through header */
-main[class*="overflow-y-auto"] {
+main[class*="no-scrollbar"] {
   position: absolute !important;
   z-index: 1 !important;
-  top: calc(3.5rem + env(safe-area-inset-top, 0px)) !important;
-  max-height: calc(100vh - 3.5rem - env(safe-area-inset-top, 0px) - 5rem) !important;
+  top: 4.5rem !important;
+  max-height: calc(100vh - 4.5rem - 5rem) !important;
+  overflow: hidden !important;
+}
+
+/* Inner scrollable container - this is what actually scrolls */
+main[class*="no-scrollbar"] > div {
+  height: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  /* Force clipping to prevent content showing above */
-  clip-path: inset(0 0 0 0) !important;
-  -webkit-clip-path: inset(0 0 0 0) !important;
-  /* Contain content to prevent overflow */
-  contain: layout style paint !important;
-  /* Ensure content cannot scroll above top */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  /* Prevent any content from showing above */
-  overflow: hidden auto !important;
-}
-
-/* Force all content inside main to stay below header */
-main[class*="overflow-y-auto"] > div {
+  -webkit-overflow-scrolling: touch !important;
   position: relative !important;
-  z-index: 1 !important;
-  overflow: hidden !important;
   max-height: 100% !important;
+  /* Prevent content from scrolling above */
+  overscroll-behavior: contain !important;
 }
 
-main[class*="overflow-y-auto"] > div > div {
-  position: relative !important;
-  z-index: 1 !important;
+/* Ensure headers have completely solid backgrounds with no transparency */
+nav[class*="fixed"][class*="top-0"],
+div[class*="fixed"][class*="top-0"] {
+  background-color: #18181b !important;
+  background: #18181b !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  opacity: 1 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+  z-index: 99999 !important;
 }
 
 /* Add a mask above header to prevent any content from showing */
