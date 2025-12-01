@@ -1437,7 +1437,19 @@ const PlayerHome = ({ setView, setActiveTask }) => {
     };
   }, []);
 
-  const handleTaskClick = (task) => {
+  const handleTaskClick = (task, date) => {
+    // Prevent clicking on tasks if the day is excluded (game/practice)
+    if (date) {
+      const dateKey = formatDateKey(date);
+      const isExcluded = isDateExcluded(date);
+      const isToday = dateKey === formatDateKey(new Date());
+      
+      // Don't allow starting workouts on excluded days (unless it's first day)
+      if (isExcluded && !(isFirstDay && isToday)) {
+        return; // Disabled - don't start workout
+      }
+    }
+    
     setActiveTask(task);
     setView('training');
   };
@@ -2073,27 +2085,54 @@ const PlayerHome = ({ setView, setActiveTask }) => {
                     {category.icon}
                               <h6 className="text-zinc-400 font-bold text-xs uppercase">{category.title}</h6>
                 </div>
-                            {category.items && category.items.map((task) => (
+                            {category.items && category.items.map((task) => {
+                              const isTaskDisabled = isExcluded && !(isFirstDay && isToday);
+                      return (
                         <Card 
                             key={task.id} 
-                            onClick={() => handleTaskClick(task)}
-                                className="p-2.5 md:p-3 flex items-center gap-2 md:gap-3 cursor-pointer hover:border-cyan-500/50 transition-colors border-l-4 border-l-zinc-800"
+                            onClick={() => !isTaskDisabled && handleTaskClick(task, day)}
+                                className={`p-2.5 md:p-3 flex items-center gap-2 md:gap-3 border-l-4 border-l-zinc-800 transition-colors ${
+                                  isTaskDisabled 
+                                    ? 'opacity-50 cursor-not-allowed' 
+                                    : 'cursor-pointer hover:border-cyan-500/50'
+                                }`}
                               >
-                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${task.completed ? 'bg-green-500/10 text-green-500' : 'bg-zinc-800 text-zinc-400'}`}>
-                                  {task.completed ? <CheckCircle size={18} /> : <Activity size={18} />}
+                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
+                                  isTaskDisabled 
+                                    ? 'bg-zinc-900 text-zinc-600' 
+                                    : task.completed 
+                                      ? 'bg-green-500/10 text-green-500' 
+                                      : 'bg-zinc-800 text-zinc-400'
+                                }`}>
+                                  {isTaskDisabled ? <X size={18} /> : task.completed ? <CheckCircle size={18} /> : <Activity size={18} />}
                                 </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className={`font-bold text-sm truncate ${task.completed ? 'text-zinc-500 line-through' : 'text-zinc-200'}`}>
+                                <h4 className={`font-bold text-sm truncate ${
+                                  isTaskDisabled 
+                                    ? 'text-zinc-600' 
+                                    : task.completed 
+                                      ? 'text-zinc-500 line-through' 
+                                      : 'text-zinc-200'
+                                }`}>
                                     {task.title}
                                 </h4>
-                                <div className="flex gap-2 text-[10px] mt-1 text-zinc-500 font-bold uppercase">
-                                    {task.duration && <span>{task.duration}</span>}
-                                    {task.totalSets && <span>• {task.totalSets} sets</span>}
+                                <div className={`flex gap-2 text-[10px] mt-1 font-bold uppercase ${
+                                  isTaskDisabled ? 'text-zinc-700' : 'text-zinc-500'
+                                }`}>
+                                    {isTaskDisabled ? (
+                                      <span className="text-red-400">Disabled - {excludedReason === 'game' ? 'Game Day' : 'Practice Day'}</span>
+                                    ) : (
+                                      <>
+                                        {task.duration && <span>{task.duration}</span>}
+                                        {task.totalSets && <span>• {task.totalSets} sets</span>}
+                                      </>
+                                    )}
                                 </div>
                             </div>
-                                {!task.completed && <ChevronRight size={14} className="text-zinc-600" />}
+                                {!isTaskDisabled && !task.completed && <ChevronRight size={14} className="text-zinc-600" />}
                         </Card>
-                            ))}
+                            );
+                            })}
                 </div>
                         ))}
              </div>
@@ -4206,7 +4245,7 @@ export default function App() {
         <main className="absolute left-0 right-0 px-1 md:px-4 no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 1, top: '4.5rem', bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingTop: '0', paddingBottom: '1rem', position: 'absolute', overflow: 'hidden', maxHeight: 'calc(100vh - 4.5rem - calc(5rem + max(1rem, env(safe-area-inset-bottom))))' }}>
             <div style={{ height: '100%', overflowY: 'auto', overflowX: 'hidden', position: 'relative', WebkitOverflowScrolling: 'touch' }}>
                 <div className="max-w-full overflow-x-hidden" style={{ paddingBottom: '2rem', position: 'relative', zIndex: 1 }}>
-                    {renderView()}
+            {renderView()}
                 </div>
             </div>
         </main>
