@@ -62,8 +62,8 @@ div[class*="fixed"][class*="top-0"] {
 main[class*="no-scrollbar"] {
   position: absolute !important;
   z-index: 1 !important;
-  top: 4.5rem !important;
-  max-height: calc(100vh - 4.5rem - 5rem) !important;
+  top: calc(3.5rem + env(safe-area-inset-top, 0px)) !important;
+  max-height: calc(100vh - calc(3.5rem + env(safe-area-inset-top, 0px)) - 5rem) !important;
   overflow: hidden !important;
 }
 
