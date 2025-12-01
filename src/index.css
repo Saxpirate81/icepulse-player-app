@@ -8,6 +8,9 @@ html {
   max-width: 100vw;
   height: 100%;
   height: -webkit-fill-available;
+  /* Remove any default padding/margin */
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -27,6 +30,9 @@ body {
   position: relative;
   /* Ensure body allows scrolling */
   overflow-y: auto;
+  /* Remove any default padding/margin */
+  padding: 0;
+  margin: 0;
 }
 
 * {
