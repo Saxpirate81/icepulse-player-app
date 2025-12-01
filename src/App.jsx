@@ -1341,6 +1341,22 @@ const PlayerHome = ({ setView, setActiveTask }) => {
   const [viewMode, setViewMode] = useState('calendar'); // 'calendar' or 'workout'
   const [deletedDefaults, setDeletedDefaults] = useState(new Set());
   const [isFirstDay, setIsFirstDay] = useState(false);
+  const [currentStreak, setCurrentStreak] = useState(0);
+
+  // Load current streak
+  useEffect(() => {
+    const loadStreak = async () => {
+      try {
+        const { recalculateStreak } = await import('./utils/streakTracking.js');
+        const streak = recalculateStreak();
+        setCurrentStreak(streak);
+      } catch (error) {
+        console.error('Error loading streak:', error);
+        setCurrentStreak(0);
+      }
+    };
+    loadStreak();
+  }, []);
 
   // Check if this is the player's first day
   const checkFirstDay = () => {
@@ -1883,7 +1899,7 @@ const PlayerHome = ({ setView, setActiveTask }) => {
         <div className="flex gap-2">
           <div className="flex flex-col items-center bg-zinc-900 px-3 py-2 rounded-xl border border-zinc-800">
             <Flame className="text-red-500 fill-red-500/20" size={20} />
-            <span className="text-[10px] font-bold text-red-400 mt-1">12 Days</span>
+            <span className="text-[10px] font-bold text-red-400 mt-1">{currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}</span>
           </div>
         </div>
       </div>
@@ -4135,8 +4151,8 @@ export default function App() {
         <div className="fixed top-0 left-0 right-0 z-[99999] px-2 md:px-4 flex justify-between items-center border-b border-zinc-800/50 shadow-lg" style={{ backgroundColor: '#18181b', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999, minHeight: '4.5rem', height: '4.5rem', paddingTop: '1rem', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)' }}>
             <IcePulseLogo />
             <div className="flex items-center gap-2">
-              {/* Organization Dashboard Button (for admins) */}
-              {isAuthenticated && currentUser?.role === 'organization_admin' && (
+              {/* Organization Dashboard Button (for admins, hidden in player view) */}
+              {isAuthenticated && currentUser?.role === 'organization_admin' && userRole !== 'student' && (
             <button 
                   onClick={() => {
                     setCurrentView('organization-dashboard');
