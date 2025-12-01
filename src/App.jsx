@@ -4131,11 +4131,11 @@ export default function App() {
       {/* Mobile Device Frame for Web App View */}
       <div className="w-full h-screen md:h-[850px] md:w-[400px] bg-zinc-950 md:rounded-[3rem] relative shadow-2xl overflow-hidden border-[8px] border-zinc-900 md:ring-4 ring-zinc-400/20 max-w-full overflow-x-hidden" style={{ margin: 0, padding: 0 }}>
         
-        {/* Mask overlay to prevent content showing above header */}
-        <div className="fixed top-0 left-0 right-0 h-14 bg-zinc-950 z-[99998]" style={{ backgroundColor: '#18181b', zIndex: 99998 }}></div>
+        {/* Mask overlay to prevent content showing above header - covers entire top area */}
+        <div className="fixed top-0 left-0 right-0 h-14 bg-zinc-950 z-[99998]" style={{ backgroundColor: '#18181b', zIndex: 99998, position: 'fixed', top: 0, left: 0, right: 0, height: '3.5rem' }}></div>
         
         {/* Top App Bar - Fixed at top with solid background, covers browser status bar */}
-        <div className="fixed top-0 left-0 right-0 z-[99999] px-2 md:px-4 h-14 flex justify-between items-center border-b border-zinc-800/50 shadow-lg" style={{ backgroundColor: '#18181b', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999, minHeight: '3.5rem', height: '3.5rem' }}>
+        <div className="fixed top-0 left-0 right-0 z-[99999] px-2 md:px-4 h-14 flex justify-between items-center border-b border-zinc-800/50 shadow-lg" style={{ backgroundColor: '#18181b', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999, minHeight: '3.5rem', height: '3.5rem', overflow: 'hidden' }}>
             <IcePulseLogo />
             <div className="flex items-center gap-2">
               {/* Organization Dashboard Button (for admins) */}
@@ -4177,7 +4177,7 @@ export default function App() {
         </div>
 
         {/* Scrollable Content Area - Starts below header, never scrolls above */}
-        <main className="absolute left-0 right-0 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 1, top: '3.5rem', bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingTop: '0', paddingBottom: '1rem', willChange: 'scroll-position', position: 'absolute', maxHeight: 'calc(100vh - 3.5rem - calc(5rem + max(1rem, env(safe-area-inset-bottom))))' }}>
+        <main className="absolute left-0 right-0 px-1 md:px-4 overflow-y-auto overflow-x-hidden no-scrollbar bg-gradient-to-b from-zinc-950 to-zinc-900" style={{ zIndex: 1, top: '3.5rem', bottom: 'calc(5rem + max(1rem, env(safe-area-inset-bottom)))', paddingTop: '0', paddingBottom: '1rem', willChange: 'scroll-position', position: 'absolute', maxHeight: 'calc(100vh - 3.5rem - calc(5rem + max(1rem, env(safe-area-inset-bottom))))', clipPath: 'inset(0 0 0 0)', WebkitClipPath: 'inset(0 0 0 0)' }}>
             <div className="max-w-full overflow-x-hidden" style={{ paddingBottom: '2rem' }}>
             {renderView()}
             </div>
